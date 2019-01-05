@@ -18,11 +18,11 @@ public class ShiroConfig {
 		bean.setSecurityManager(securityManager);
 		Map<String,String> filterMap = new LinkedHashMap();
 //		认证过滤器,不是在shiro.ini里配置
-		filterMap.put("/product/toAdd", "anon");
 //		放行登陆页面
 		filterMap.put("/user/login", "anon");
 //		授权过滤器
 		filterMap.put("/product/toAdd", "perms[product:add]");
+		filterMap.put("/product/toList", "perms[product:list]");
 		filterMap.put("/product/toUpdate", "perms[product:update]");
 		filterMap.put("/**", "authc");//一定要放在filterMap.put("/product/toUpdate", "perms[product:update]")之后！重点。否则授权过滤无效！
 //		添加shiro过滤器
