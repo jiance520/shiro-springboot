@@ -18,7 +18,8 @@
 
 <body>
  	<h3>用户登陆</h3>
-	<div style="color:red"></div>
+ 	<!--使用thymeleaf达到html页面取值  -->
+	<div style="color:red" th:text="${msg}"></div>
 	<!-- <font color="red"></font> -->
 	<form method="post" action="/user/login">
 		用户名：<input type="text" name="name"><br>

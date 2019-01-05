@@ -16,7 +16,7 @@
   
   <body>
     <h3>商品管理后台系统主页</h3><br>
-    当前用户为:
+    当前用户为:<span th:text="${session.username}"></span>
     <hr/>
     <!-- 授权标签，如果有该权限，则显示该标签 -->
     <a href="/product/toAdd">商品增加</a></br>
