@@ -16,9 +16,9 @@ public class MyRealm extends AuthorizingRealm{
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-//		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-//		info.addStringPermission("product:add");
-		return null;
+		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		info.addStringPermission("product:add");
+		return info;
 	}
 // 认证
 	@Override
