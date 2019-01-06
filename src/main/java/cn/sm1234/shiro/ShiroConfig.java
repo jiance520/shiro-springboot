@@ -1,17 +1,12 @@
 package cn.sm1234.shiro;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
+import java.util.*;
 import javax.servlet.Filter;
-
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.mgt.CookieRememberMeManager;
-import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.mgt.*;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import cn.sm1234.filter.UserFormAuthenticationFilter;
 //shiro配置类，由于不能在xml里配置，只能在类里面配置
@@ -27,6 +22,8 @@ public class ShiroConfig {
 //		认证过滤器,不是在shiro.ini里配置
 //		放行登陆页面
 		filterMap.put("/user/login", "anon");
+//		放行验证码请求
+		filterMap.put("/defaultKaptcha", "anon");
 //		授权过滤器
 		filterMap.put("/product/toAdd", "perms[product:add]");
 		filterMap.put("/product/toList", "perms[product:list]");

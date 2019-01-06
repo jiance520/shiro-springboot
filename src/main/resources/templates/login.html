@@ -24,6 +24,7 @@
 	<form method="post" action="/user/login">
 		用户名：<input type="text" name="name"><br>
 		密码：<input type="password" name="password"><br>
+		验证码：<input type="text" name="code"><img src="/defaultKaptcha" onclick="this.src='/defaultKaptcha?d='+new Date()"/><br><!--注意引号 -->
 		是否记住我:<input type="checkbox" name="rememberMe" value="1"/><br>
 		<input type="submit" value="登陆"/><br>
 	</form>
