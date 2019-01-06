@@ -3,6 +3,8 @@ package cn.sm1234.shiro;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.servlet.Filter;
+
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -11,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import cn.sm1234.filter.UserFormAuthenticationFilter;
 //shiro配置类，由于不能在xml里配置，只能在类里面配置
 @Configuration
 public class ShiroConfig {
@@ -29,8 +32,13 @@ public class ShiroConfig {
 		filterMap.put("/product/toList", "perms[product:list]");
 		filterMap.put("/product/toUpdate", "perms[product:update]");
 //		添加user过滤器，只要控制层判断index使用了，rememberMe则放行。与UserController中的token.setRememberMe(true)是一对开关组合。
-		filterMap.put("/index","user");//重点，前面的/不能省！
+//		filterMap.put("/index","user");
+		filterMap.put("/index","userFilter");//重点，前面的/不能省！自定义userFilter过滤器解决了session丢失问题。
 		filterMap.put("/**", "authc");//一定要放在filterMap.put("/product/toUpdate", "perms[product:update]")之后！重点。否则授权过滤无效！
+//		把自定义Filter添加到shiroFilter里面
+		Map<String,Filter> filters = new LinkedHashMap();
+		filters.put("userFilter", userFormAuthenticationFilter());
+		bean.setFilters(filters);
 //		添加shiro过滤器
 		bean.setFilterChainDefinitionMap(filterMap);
 //		修改登陆请求
@@ -39,8 +47,13 @@ public class ShiroConfig {
 		bean.setUnauthorizedUrl("/unAuth");
 		return bean;
 	}
-//	创建SecurityManager
+//	创建自定义过滤器，判断记住我时session是否失效。
 	@Bean
+	public UserFormAuthenticationFilter userFormAuthenticationFilter() {
+		return new UserFormAuthenticationFilter();
+	}
+//	创建SecurityManager
+	@Bean(name="userFilter")
 	public DefaultWebSecurityManager defaultWebSecurityManager(MyRealm myrealm,CookieRememberMeManager rememberMeManager) {
 		DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
 //		关联MyRealm
@@ -61,7 +74,7 @@ public class ShiroConfig {
 	public SimpleCookie SimpleCookie() {
 		SimpleCookie cookie = new SimpleCookie("rememberMe");
 //		设置cookie 时间长。
-		cookie.setMaxAge(240);
+		cookie.setMaxAge(120);
 //		设置cookie为只读模式，提高安全性
 		cookie.setHttpOnly(true);
 		return cookie;

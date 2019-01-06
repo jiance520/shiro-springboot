@@ -7,6 +7,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +22,10 @@ public class UserController {
 	public String login(User user,String rememberMe,HttpServletRequest request,Model model) {
 //		使用shiro进行登陆
 		Subject subject = SecurityUtils.getSubject();
-		UsernamePasswordToken token = new UsernamePasswordToken(user.getName(),user.getPassword());
+//		使用MD5加密用户密码后与数据库加密的密码核对
+		Md5Hash hash = new Md5Hash(user.getPassword(), user.getName(), 2);
+//		UsernamePasswordToken token = new UsernamePasswordToken(user.getName(),user.getPassword());
+		UsernamePasswordToken token = new UsernamePasswordToken(user.getName(),hash.toString());
 		if(rememberMe!=null && rememberMe.equals("1")) {//对于checkbox，如果没有选中，默认值是null! 后面的rememberMe.equals("1")应该可以去掉？
 			token.setRememberMe(true);//与filterMap.put("/index","user");构成组合。判断页面是否使用了记住我。
 		}

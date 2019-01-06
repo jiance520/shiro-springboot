@@ -14,4 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INNER JOIN t_permission p ON rp.permission_id=p.id
 		WHERE u.id=#{value}
 	</select>
+	<select id="updatePassword" parameterType="user">
+		update shiro.t_user set password = #{password} where id=#{id}
+	</select>
 </mapper>
