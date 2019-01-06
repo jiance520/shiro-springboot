@@ -22,8 +22,8 @@ public class UserController {
 //		使用shiro进行登陆
 		Subject subject = SecurityUtils.getSubject();
 		UsernamePasswordToken token = new UsernamePasswordToken(user.getName(),user.getPassword());
-		if(rememberMe!=null && rememberMe.equals("1")) {
-			token.setRememberMe(true);//与filterMap.put("index","user");构成组合。判断页面是否使用了记住我。
+		if(rememberMe!=null && rememberMe.equals("1")) {//对于checkbox，如果没有选中，默认值是null! 后面的rememberMe.equals("1")应该可以去掉？
+			token.setRememberMe(true);//与filterMap.put("/index","user");构成组合。判断页面是否使用了记住我。
 		}
 		try {
 			subject.login(token);

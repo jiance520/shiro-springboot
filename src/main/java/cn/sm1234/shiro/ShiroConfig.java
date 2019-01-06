@@ -29,7 +29,7 @@ public class ShiroConfig {
 		filterMap.put("/product/toList", "perms[product:list]");
 		filterMap.put("/product/toUpdate", "perms[product:update]");
 //		添加user过滤器，只要控制层判断index使用了，rememberMe则放行。与UserController中的token.setRememberMe(true)是一对开关组合。
-		filterMap.put("index","user");
+		filterMap.put("/index","user");//重点，前面的/不能省！
 		filterMap.put("/**", "authc");//一定要放在filterMap.put("/product/toUpdate", "perms[product:update]")之后！重点。否则授权过滤无效！
 //		添加shiro过滤器
 		bean.setFilterChainDefinitionMap(filterMap);
