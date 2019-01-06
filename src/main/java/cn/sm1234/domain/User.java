@@ -1,6 +1,8 @@
 package cn.sm1234.domain;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable{
 	private Integer id;
 	private String name;
 	private String password;

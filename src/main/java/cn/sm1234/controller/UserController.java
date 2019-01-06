@@ -18,16 +18,19 @@ import cn.sm1234.domain.User;
 @RequestMapping("/user")
 public class UserController {
 	@RequestMapping("/login")
-	public String login(User user,HttpServletRequest request,Model model) {
+	public String login(User user,String rememberMe,HttpServletRequest request,Model model) {
 //		使用shiro进行登陆
 		Subject subject = SecurityUtils.getSubject();
-		AuthenticationToken token = new UsernamePasswordToken(user.getName(),user.getPassword());
+		UsernamePasswordToken token = new UsernamePasswordToken(user.getName(),user.getPassword());
+		if(rememberMe!=null && rememberMe.equals("1")) {
+			token.setRememberMe(true);//与filterMap.put("index","user");构成组合。判断页面是否使用了记住我。
+		}
 		try {
 			subject.login(token);
 //			登陆成功
 			User dbuser = (User)subject.getPrincipal();
 			request.getSession().setAttribute("username", dbuser.getName());
-			return "index";
+			return "redirect:/index";
 			
 		} catch (UnknownAccountException e) {
 			model.addAttribute("msg", "用户名不存在");
@@ -36,5 +39,11 @@ public class UserController {
 			model.addAttribute("msg", "密码错误");
 			return "login";
 		}
+	}
+	@RequestMapping("/logout")
+	public String logout() {
+		Subject subject = SecurityUtils.getSubject();
+		subject.logout();//删除shiro的session会员信息
+		return "redirect:/toLogin";
 	}
 }
