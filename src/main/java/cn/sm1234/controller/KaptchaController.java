@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 @Controller
-public class KaptcharController {
+public class KaptchaController {
 
 	@Resource
 	private DefaultKaptcha defaultKaptcha;  	

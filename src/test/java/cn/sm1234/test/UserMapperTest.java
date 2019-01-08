@@ -5,7 +5,6 @@ import cn.sm1234.dao.UserMapper;
 import cn.sm1234.domain.User;
 
 import javax.annotation.Resource;
-
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.junit.Test;
 import org.junit.runner.RunWith;
