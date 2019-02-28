@@ -5,6 +5,7 @@
 	<groupId>cn.sm1234</groupId>
 	<artifactId>shiro-springboot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
 	<!-- Spring Boot 父工程 -->
 	<parent>
