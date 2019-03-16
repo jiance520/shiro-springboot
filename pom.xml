@@ -75,4 +75,35 @@
 			<version>2.3.2</version>
 		</dependency>
 	</dependencies>
+	
+		<build>
+		<plugins>
+			<!-- jdk版本插件升级 项目>右键>maven>update project -->
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.2</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+					<showWarnings>true</showWarnings>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<port>8090</port><!--注意，这个不是自己的本地tomcat的端口 -->
+					<server>tomcat7</server>
+				</configuration>
+			</plugin>
+			<!-- 打包方式，可有可无 -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-shade-plugin</artifactId> 
+				<version>3.0.0</version> <configuration> <createDependencyReducedPom>false</createDependencyReducedPom> 
+				</configuration> </plugin> -->
+		</plugins>
+	</build>
 </project>
